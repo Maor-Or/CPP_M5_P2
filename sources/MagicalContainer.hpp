@@ -70,7 +70,7 @@ namespace ariel
             MagicalContainer &magicalContainer;
             std::vector<int>::iterator lowSideIter;
             std::vector<int>::iterator highSideIter;
-            int currTurn;
+            int currTurn, steps;
 
             // my added private functions:
             SideCrossIterator lastElem();
