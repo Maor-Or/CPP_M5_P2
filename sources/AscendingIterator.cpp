@@ -6,28 +6,36 @@ using namespace std;
 namespace ariel
 {
     // Ctors & Dtors:
+    // default Ctor:
     MagicalContainer::AscendingIterator::AscendingIterator(MagicalContainer &mcon)
         : magicalContainer(mcon), mainIter(magicalContainer.begin())
     {
-    }
-    MagicalContainer::AscendingIterator::AscendingIterator(MagicalContainer &mcon, std::vector<int>::iterator position)
-        : magicalContainer(mcon), mainIter(position)
-    {
+        if (magicalContainer.size() == 0)
+        {
+            *this = end();
+        }
     }
 
+    // copy Ctor:
+    MagicalContainer::AscendingIterator::AscendingIterator(AscendingIterator &other)
+        : magicalContainer(other.magicalContainer), mainIter(other.mainIter) {}
+
+    // special constructor for begin(), end():
+    MagicalContainer::AscendingIterator::AscendingIterator(MagicalContainer &mcon, std::vector<int>::iterator position)
+        : magicalContainer(mcon), mainIter(position) {}
+
     MagicalContainer::AscendingIterator::~AscendingIterator() {}
+
 
     // functions to implement:
     MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::begin()
     {
         return {magicalContainer, magicalContainer.begin()};
-        // MagicalContainer::AscendingIterator newIter(magicalContainer, magicalContainer.begin());
     }
 
     MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::end()
     {
         return {magicalContainer, magicalContainer.end()};
-        // return newIter;
     }
 
     MagicalContainer::AscendingIterator &MagicalContainer::AscendingIterator::operator++()
@@ -42,14 +50,34 @@ namespace ariel
         return *this;
     } // prefix
 
+    bool MagicalContainer::AscendingIterator::operator==(
+        const MagicalContainer::AscendingIterator &other) const
+    {
+        if (magicalContainer != other.magicalContainer)
+        {
+            throw std::runtime_error("Itertators have different magicalContainers");
+        }
+        return mainIter == other.mainIter;
+    }
+
+    bool MagicalContainer::AscendingIterator::operator!=(
+        const MagicalContainer::AscendingIterator &other) const
+    {
+        return !(*this == other);
+    }
+
     bool MagicalContainer::AscendingIterator::operator>(const AscendingIterator &other) const
     {
+        if (magicalContainer != other.magicalContainer)
+        {
+            throw std::runtime_error("Itertators have different magicalContainers");
+        }
         return mainIter > other.mainIter;
     }
 
     bool MagicalContainer::AscendingIterator::operator<(const AscendingIterator &other) const
     {
-        return mainIter < other.mainIter;
+        return !(*this == other || *this > other);
     }
 
     MagicalContainer::AscendingIterator &MagicalContainer::AscendingIterator::operator=(const AscendingIterator &other)
@@ -57,21 +85,10 @@ namespace ariel
         if (magicalContainer != other.magicalContainer)
         {
             throw std::runtime_error("Itertators have different magicalContainers");
-            return *this;
         }
 
         mainIter = other.mainIter;
         return *this;
-    }
-    bool MagicalContainer::AscendingIterator::operator==(
-        const MagicalContainer::AscendingIterator &other) const
-    {
-        return mainIter == other.mainIter;
-    }
-    bool MagicalContainer::AscendingIterator::operator!=(
-        const MagicalContainer::AscendingIterator &other) const
-    {
-        return !(*this == other);
     }
 
     int MagicalContainer::AscendingIterator::operator*()

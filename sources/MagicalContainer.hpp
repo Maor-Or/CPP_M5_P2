@@ -8,22 +8,24 @@ namespace ariel
     class MagicalContainer
     {
     private:
+        // main internal container:
         std::vector<int> container;
 
         // for following primes:
         std::vector<int> primeContainer;
 
         // for following crossIter end:
+        std::vector<int>::iterator crossEnd;
 
         // my added private functions:
         void removePrime(int number);
+        bool isPrime(int number);
         bool isNumberInContainer(int number);
         std::vector<int>::iterator begin();
         std::vector<int>::iterator end();
         void updateCrossEnd();
 
     public:
-        std::vector<int>::iterator crossEnd;
         // Ctors & Dtors:
         MagicalContainer();
         ~MagicalContainer();
@@ -34,7 +36,6 @@ namespace ariel
         void removeElement(int number);
 
         // my added functions:
-        bool isPrime(int number);
         bool operator==(const MagicalContainer &other) const;
         bool operator!=(const MagicalContainer &other) const;
 
@@ -46,10 +47,13 @@ namespace ariel
             MagicalContainer &magicalContainer;
             std::vector<int>::iterator mainIter;
 
+            // special constructor for begin(), end():
+            AscendingIterator(MagicalContainer &container, std::vector<int>::iterator position);
+
         public:
             // Ctors & Dtors:
-            AscendingIterator(MagicalContainer &container);
-            AscendingIterator(MagicalContainer &container, std::vector<int>::iterator position);
+            AscendingIterator(MagicalContainer &container); // default Ctor
+            AscendingIterator(AscendingIterator &other);    // copy Ctor
             ~AscendingIterator();
 
             // functions to implement:
@@ -72,16 +76,17 @@ namespace ariel
             std::vector<int>::iterator highSideIter;
             int currTurn, steps;
 
-            // my added private functions:
-            SideCrossIterator lastElem();
-
-        public:
-            // Ctors & Dtors:
-            SideCrossIterator(MagicalContainer &mcon);
+            // special constructor for begin(), end():
             SideCrossIterator(MagicalContainer &mcon,
                               std::vector<int>::iterator lowPosition,
                               std::vector<int>::iterator highPosition,
-                              int currTurn);
+                              int currTurn, int steps);
+
+        public:
+            // Ctors & Dtors:
+            SideCrossIterator(MagicalContainer &mcon);   // default Ctor
+            SideCrossIterator(SideCrossIterator &other); // copy Ctor
+            ~SideCrossIterator();
 
             // functions to implement:
             SideCrossIterator begin();
@@ -102,11 +107,14 @@ namespace ariel
             std::vector<int>::iterator mainIter;
             std::vector<int>::iterator primeIter;
 
+            // special constructor for begin(), end():
+            PrimeIterator(MagicalContainer &mcon, std::vector<int>::iterator position);
+    
         public:
             // Ctors & Dtors:
-            PrimeIterator(MagicalContainer &container);
-            PrimeIterator(MagicalContainer &mcon, std::vector<int>::iterator position);
-            ~PrimeIterator();
+            PrimeIterator(MagicalContainer &container); // default Ctor
+            PrimeIterator(PrimeIterator& other);        //copy Ctor
+            ~PrimeIterator();                           
 
             // functions to implement:
             PrimeIterator begin();

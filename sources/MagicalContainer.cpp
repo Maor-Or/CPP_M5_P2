@@ -8,7 +8,7 @@ namespace ariel
 {
 
     // Ctors & Dtors:
-    MagicalContainer::MagicalContainer() : container(0), crossEnd(container.end())
+    MagicalContainer::MagicalContainer() : container(0), primeContainer(0), crossEnd(container.end())
     {
     }
 
@@ -20,17 +20,16 @@ namespace ariel
     void MagicalContainer::addElement(int number)
     {
         container.emplace_back(number);
-
         std::sort(container.begin(), container.end());
 
+        // if number is prime, add to prime vector:
         if (isPrime(number))
         {
-            // cout << number << " is prime!" << endl;
             primeContainer.emplace_back(number);
             std::sort(primeContainer.begin(), primeContainer.end());
-            // cout << " in the primeContainer: " << *primeContainer.begin() << endl;
         }
 
+        // for the end() of sideCross iterator:
         updateCrossEnd();
     }
     int MagicalContainer::size()
@@ -45,6 +44,7 @@ namespace ariel
             throw std::runtime_error("number isn't in the container!");
         }
 
+        // if number is prime, delete from prime vector:
         if (isPrime(number))
         {
             // Erase the desired number from the prime list:
@@ -62,6 +62,7 @@ namespace ariel
             else
                 ++it;
         }
+        // for the end() of sideCross iterator:
         updateCrossEnd();
     }
 
@@ -144,8 +145,8 @@ namespace ariel
             }
         }
         crossEnd = lowIter;
-    //      std::cout << "endcross is: ";
-    // std::cout<< *(crossEnd) << std::endl;
+        //      std::cout << "endcross is: ";
+        // std::cout<< *(crossEnd) << std::endl;
     }
 
 } // namespace ariel

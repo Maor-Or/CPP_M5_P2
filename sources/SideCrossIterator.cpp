@@ -6,9 +6,8 @@ using namespace std;
 namespace ariel
 {
 
-    // // class MagicalContainer::SideCrossIterator;
-
     // Ctors & Dtors:
+    // default Ctor:
     MagicalContainer::SideCrossIterator::SideCrossIterator(MagicalContainer &mcon)
         : magicalContainer(mcon),
           lowSideIter(magicalContainer.container.begin()),
@@ -20,41 +19,46 @@ namespace ariel
             *this = end();
         }
     }
-    // MagicalContainer::SideCrossIterator::~SideCrossIterator() {}
 
+    // copy Ctor:
+    MagicalContainer::SideCrossIterator::SideCrossIterator(
+        SideCrossIterator &other)
+        : magicalContainer(other.magicalContainer),
+          lowSideIter(other.lowSideIter),
+          highSideIter(other.highSideIter),
+          currTurn(other.currTurn),
+          steps(other.steps)
+    {
+    }
+
+    // special constructor for begin(), end():
     MagicalContainer::SideCrossIterator::SideCrossIterator(
         MagicalContainer &mcon,
         std::vector<int>::iterator lowPosition,
         std::vector<int>::iterator highPosition,
-        int currTurn)
+        int currTurn,
+        int steps)
         : magicalContainer(mcon),
           lowSideIter(lowPosition),
           highSideIter(highPosition),
-          currTurn(currTurn)
+          currTurn(currTurn),
+          steps(steps)
     {
     }
+
+    MagicalContainer::SideCrossIterator::~SideCrossIterator() {}
 
     // functions to implement:
     MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::begin()
     {
         return {magicalContainer, magicalContainer.container.begin(),
-                std::prev(magicalContainer.container.end()), 0};
+                std::prev(magicalContainer.container.end()), 0, 0};
     }
 
-
-MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::end()
+    MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::end()
     {
-        return {magicalContainer, magicalContainer.container.end(), magicalContainer.container.end(), 2};
-    }
-
-    // MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::end()
-    // {
-    //     return {magicalContainer, magicalContainer.crossEnd, magicalContainer.crossEnd, 2};
-    // }
-
-    MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::lastElem()
-    {
-        return {magicalContainer, magicalContainer.crossEnd, magicalContainer.crossEnd, 0};
+        return {magicalContainer, magicalContainer.container.end(),
+                magicalContainer.container.end(), 2, magicalContainer.size() - 1};
     }
 
     MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator++()
@@ -65,10 +69,10 @@ MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::end()
             throw std::runtime_error("can't increment beyond container's limits");
             return *this;
         }
-        if (lowSideIter > highSideIter || steps == magicalContainer.size()-1)
+        if (lowSideIter > highSideIter || steps == magicalContainer.size() - 1)
         {
             lowSideIter = magicalContainer.container.end();
-            highSideIter = magicalContainer.container.end();            
+            highSideIter = magicalContainer.container.end();
             currTurn = 2;
             return *this;
         }
@@ -83,9 +87,17 @@ MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::end()
             currTurn = 0;
         }
         ++steps;
-        
+
         return *this;
     } // prefix
+
+    bool MagicalContainer::SideCrossIterator::operator==(
+        const MagicalContainer::SideCrossIterator &other) const
+    {
+        return (lowSideIter == other.lowSideIter) &&
+               (highSideIter == other.highSideIter) &&
+               (currTurn == other.currTurn);
+    }
 
     bool MagicalContainer::SideCrossIterator::operator>(const SideCrossIterator &other) const
     {
@@ -99,30 +111,24 @@ MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::end()
         return !((*this) == other || (*this) > other);
     }
 
+    bool MagicalContainer::SideCrossIterator::operator!=(
+        const MagicalContainer::SideCrossIterator &other) const
+    {
+        return !(*this == other);
+    }
+
     MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator=(const SideCrossIterator &other)
     {
         if (magicalContainer != other.magicalContainer)
         {
             throw std::runtime_error("Itertators have different magicalContainers");
-            return *this;
         }
 
         lowSideIter = other.lowSideIter;
         highSideIter = other.highSideIter;
         currTurn = other.currTurn;
+        steps = other.steps;
         return *this;
-    }
-    bool MagicalContainer::SideCrossIterator::operator==(
-        const MagicalContainer::SideCrossIterator &other) const
-    {
-        return (lowSideIter == other.lowSideIter) &&
-               (highSideIter == other.highSideIter) &&
-               (currTurn == other.currTurn);
-    }
-    bool MagicalContainer::SideCrossIterator::operator!=(
-        const MagicalContainer::SideCrossIterator &other) const
-    {
-        return !(*this == other);
     }
 
     int MagicalContainer::SideCrossIterator::operator*()
