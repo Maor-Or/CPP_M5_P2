@@ -58,7 +58,7 @@ namespace ariel
     MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::end()
     {
         return {magicalContainer, magicalContainer.container.end(),
-                magicalContainer.container.end(), 2, magicalContainer.size() - 1};
+                magicalContainer.container.end(), 2, 1};
     }
 
     MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator++()
@@ -69,7 +69,7 @@ namespace ariel
             throw std::runtime_error("can't increment beyond container's limits");
             return *this;
         }
-        if (lowSideIter > highSideIter || steps == magicalContainer.size() - 1)
+        if (lowSideIter > highSideIter || steps == 2)
         {
             lowSideIter = magicalContainer.container.end();
             highSideIter = magicalContainer.container.end();
@@ -86,7 +86,19 @@ namespace ariel
             --highSideIter;
             currTurn = 0;
         }
-        ++steps;
+
+        // last element reached
+        if (lowSideIter == highSideIter)
+        {
+            steps = 2;
+        }
+        else if (lowSideIter > highSideIter)
+        {
+            lowSideIter = magicalContainer.container.end();
+            highSideIter = magicalContainer.container.end();
+            currTurn = 2;
+            return *this;
+        }
 
         return *this;
     } // prefix
@@ -127,7 +139,6 @@ namespace ariel
         lowSideIter = other.lowSideIter;
         highSideIter = other.highSideIter;
         currTurn = other.currTurn;
-        steps = other.steps;
         return *this;
     }
 

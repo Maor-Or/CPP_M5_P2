@@ -74,7 +74,8 @@ namespace ariel
             MagicalContainer &magicalContainer;
             std::vector<int>::iterator lowSideIter;
             std::vector<int>::iterator highSideIter;
-            int currTurn, steps;
+            int currTurn, steps; //currTurn tells which iterator should de-reference 
+                                  //and steps is always 0 and is 2 when last element is reached 
 
             // special constructor for begin(), end():
             SideCrossIterator(MagicalContainer &mcon,
