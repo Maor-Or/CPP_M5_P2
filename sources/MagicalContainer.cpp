@@ -8,7 +8,7 @@ namespace ariel
 {
 
     // Ctors & Dtors:
-    MagicalContainer::MagicalContainer() : container(0), primeContainer(0), crossEnd(container.end())
+    MagicalContainer::MagicalContainer() : container(0), primeContainer(0)
     {
     }
 
@@ -28,10 +28,8 @@ namespace ariel
             primeContainer.emplace_back(number);
             std::sort(primeContainer.begin(), primeContainer.end());
         }
-
-        // for the end() of sideCross iterator:
-        updateCrossEnd();
     }
+
     int MagicalContainer::size()
     {
         return container.size();
@@ -62,8 +60,6 @@ namespace ariel
             else
                 ++it;
         }
-        // for the end() of sideCross iterator:
-        updateCrossEnd();
     }
 
     // my added functions:
@@ -125,28 +121,28 @@ namespace ariel
         return !((*this) == other);
     }
 
-    void MagicalContainer::updateCrossEnd()
-    {
-        std::vector<int>::iterator lowIter = container.begin();
-        std::vector<int>::iterator highIter = std::prev(container.end());
+    // void MagicalContainer::updateCrossEnd()
+    // {
+    //     std::vector<int>::iterator lowIter = container.begin();
+    //     std::vector<int>::iterator highIter = std::prev(container.end());
 
-        int turn = 0;
-        while (lowIter != highIter)
-        {
-            if (turn == 0)
-            {
-                ++lowIter;
-                turn = 1;
-            }
-            else
-            {
-                --highIter;
-                turn = 0;
-            }
-        }
-        crossEnd = lowIter;
-        //      std::cout << "endcross is: ";
-        // std::cout<< *(crossEnd) << std::endl;
-    }
+    //     int turn = 0;
+    //     while (lowIter != highIter)
+    //     {
+    //         if (turn == 0)
+    //         {
+    //             ++lowIter;
+    //             turn = 1;
+    //         }
+    //         else
+    //         {
+    //             --highIter;
+    //             turn = 0;
+    //         }
+    //     }
+    //     crossEnd = lowIter;
+    //     //      std::cout << "endcross is: ";
+    //     // std::cout<< *(crossEnd) << std::endl;
+    // }
 
 } // namespace ariel

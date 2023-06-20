@@ -14,16 +14,12 @@ namespace ariel
         // for following primes:
         std::vector<int> primeContainer;
 
-        // for following crossIter end:
-        std::vector<int>::iterator crossEnd;
-
         // my added private functions:
         void removePrime(int number);
         bool isPrime(int number);
         bool isNumberInContainer(int number);
-        std::vector<int>::iterator begin();
+        std::vector<int>::iterator begin();     //these are NOT the same as the Iterator's begin,end!
         std::vector<int>::iterator end();
-        void updateCrossEnd();
 
     public:
         // Ctors & Dtors:
@@ -52,7 +48,7 @@ namespace ariel
 
         public:
             // Ctors & Dtors:
-            AscendingIterator(MagicalContainer &container); // default Ctor
+            AscendingIterator(MagicalContainer &container);       // default Ctor
             AscendingIterator(const AscendingIterator &other);    // copy Ctor
             ~AscendingIterator();
 
@@ -85,7 +81,7 @@ namespace ariel
 
         public:
             // Ctors & Dtors:
-            SideCrossIterator(MagicalContainer &mcon);   // default Ctor
+            SideCrossIterator(MagicalContainer &mcon);         // default Ctor
             SideCrossIterator(const SideCrossIterator &other); // copy Ctor
             ~SideCrossIterator();
 
@@ -114,7 +110,7 @@ namespace ariel
         public:
             // Ctors & Dtors:
             PrimeIterator(MagicalContainer &container); // default Ctor
-            PrimeIterator(const PrimeIterator& other);        //copy Ctor
+            PrimeIterator(const PrimeIterator& other);  //copy Ctor
             ~PrimeIterator();                           
 
             // functions to implement:
