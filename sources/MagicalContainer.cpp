@@ -121,28 +121,4 @@ namespace ariel
         return !((*this) == other);
     }
 
-    // void MagicalContainer::updateCrossEnd()
-    // {
-    //     std::vector<int>::iterator lowIter = container.begin();
-    //     std::vector<int>::iterator highIter = std::prev(container.end());
-
-    //     int turn = 0;
-    //     while (lowIter != highIter)
-    //     {
-    //         if (turn == 0)
-    //         {
-    //             ++lowIter;
-    //             turn = 1;
-    //         }
-    //         else
-    //         {
-    //             --highIter;
-    //             turn = 0;
-    //         }
-    //     }
-    //     crossEnd = lowIter;
-    //     //      std::cout << "endcross is: ";
-    //     // std::cout<< *(crossEnd) << std::endl;
-    // }
-
 } // namespace ariel
