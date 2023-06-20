@@ -21,7 +21,7 @@ namespace ariel
     }
 
     //copy Ctor:
-    MagicalContainer::PrimeIterator::PrimeIterator(PrimeIterator &other)
+    MagicalContainer::PrimeIterator::PrimeIterator(const PrimeIterator &other)
         : magicalContainer(other.magicalContainer), mainIter(other.mainIter), primeIter(other.primeIter)
     {
     }

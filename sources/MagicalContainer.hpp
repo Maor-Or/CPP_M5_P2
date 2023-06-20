@@ -53,7 +53,7 @@ namespace ariel
         public:
             // Ctors & Dtors:
             AscendingIterator(MagicalContainer &container); // default Ctor
-            AscendingIterator(AscendingIterator &other);    // copy Ctor
+            AscendingIterator(const AscendingIterator &other);    // copy Ctor
             ~AscendingIterator();
 
             // functions to implement:
@@ -85,7 +85,7 @@ namespace ariel
         public:
             // Ctors & Dtors:
             SideCrossIterator(MagicalContainer &mcon);   // default Ctor
-            SideCrossIterator(SideCrossIterator &other); // copy Ctor
+            SideCrossIterator(const SideCrossIterator &other); // copy Ctor
             ~SideCrossIterator();
 
             // functions to implement:
@@ -113,7 +113,7 @@ namespace ariel
         public:
             // Ctors & Dtors:
             PrimeIterator(MagicalContainer &container); // default Ctor
-            PrimeIterator(PrimeIterator& other);        //copy Ctor
+            PrimeIterator(const PrimeIterator& other);        //copy Ctor
             ~PrimeIterator();                           
 
             // functions to implement:

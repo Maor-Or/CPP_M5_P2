@@ -22,7 +22,7 @@ namespace ariel
 
     // copy Ctor:
     MagicalContainer::SideCrossIterator::SideCrossIterator(
-        SideCrossIterator &other)
+        const SideCrossIterator &other)
         : magicalContainer(other.magicalContainer),
           lowSideIter(other.lowSideIter),
           highSideIter(other.highSideIter),

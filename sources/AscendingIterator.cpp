@@ -17,7 +17,7 @@ namespace ariel
     }
 
     // copy Ctor:
-    MagicalContainer::AscendingIterator::AscendingIterator(AscendingIterator &other)
+    MagicalContainer::AscendingIterator::AscendingIterator(const AscendingIterator &other)
         : magicalContainer(other.magicalContainer), mainIter(other.mainIter) {}
 
     // special constructor for begin(), end():
